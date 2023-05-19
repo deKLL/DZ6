@@ -1,0 +1,43 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+
+int main() {
+    SetConsoleCP(1251); 
+    SetConsoleOutputCP(1251);
+    const int daysInJanuary = 31;
+    int temperature[daysInJanuary];
+    int threshold;
+    double average = 0.0;
+    int count = 0;
+
+
+    for (int i = 0; i < daysInJanuary; i++) {
+        cout << "Введіть температуру за день " << (i + 1) << ": ";
+        cin >> temperature[i];
+    }
+
+ 
+    for (int i = 0; i < daysInJanuary; i++) {
+        average += temperature[i];
+    }
+    average /= daysInJanuary;
+
+
+    cout << "Введіть мітку температури: ";
+    cin >> threshold;
+
+
+    for (int i = 0; i < daysInJanuary; i++) {
+        if (temperature[i] < threshold) {
+            count++;
+        }
+    }
+
+
+    cout << "Середня температура за місяць: " << average << endl;
+    cout << "Температура опускалася нижче " << threshold << " " << count << " разів." << endl;
+
+    return 0;
+}
