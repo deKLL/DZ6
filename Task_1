@@ -1,0 +1,69 @@
+#include <iostream>
+
+const int NUM_FLOORS = 5;
+const int NUM_APARTMENTS_PER_FLOOR = 2;
+const int NUM_ENTRANCES = 4;
+
+using namespace std;
+
+int main() {
+    int residents[NUM_ENTRANCES][NUM_FLOORS][NUM_APARTMENTS_PER_FLOOR] = {
+        
+        {{2, 3}, {4, 1}, {0, 2}, {5, 4}, {3, 2}},
+        {{1, 2}, {3, 0}, {2, 1}, {4, 3}, {2, 1}},
+        {{3, 2}, {1, 1}, {2, 3}, {2, 2}, {4, 2}},
+        {{2, 1}, {4, 3}, {1, 2}, {2, 0}, {3, 2}}
+    };
+
+
+    int entrance, floor, apartment;
+    cout << "Введіть номер під'їзду, поверху та квартири (у форматі 0-3 0-4 0-1): ";
+    cin >> entrance >> floor >> apartment;
+
+    int residentsCount = residents[entrance][floor][apartment];
+    cout << "Кількість мешканців: " << residentsCount << endl;
+
+
+    int neighborsCount = 0;
+
+
+    if (apartment > 0) {
+        neighborsCount += residents[entrance][floor][apartment - 1];
+    }
+
+    if (apartment < NUM_APARTMENTS_PER_FLOOR - 1) {
+        neighborsCount += residents[entrance][floor][apartment + 1];
+    }
+
+    cout << "Кількість сусідів: " << neighborsCount << endl;
+
+
+    int entranceResidents[NUM_ENTRANCES] = {0};
+
+    for (int e = 0; e < NUM_ENTRANCES; e++) {
+        for (int f = 0; f < NUM_FLOORS; f++) {
+            for (int a = 0; a < NUM_APARTMENTS_PER_FLOOR; a++) {
+                entranceResidents[e] += residents[e][f][a];
+            }
+        }
+    }
+
+    cout << "Сумарна кількість мешканців для кожного під'їзду:" << endl;
+    for (int e = 0; e < NUM_ENTRANCES; e++) {
+        cout << "Під'їзд " << e << ": " << entranceResidents[e] << " мешканців" << endl;
+    }
+
+
+    cout << "Номери квартир, де мешкають багатодітні сім'ї:" << endl;
+    for (int e = 0; e < NUM_ENTRANCES; e++) {
+        for (int f = 0; f < NUM_FLOORS; f++) {
+            for (int a = 0; a < NUM_APARTMENTS_PER_FLOOR; a++) {
+                if (residents[e][f][a] > 5) {
+                    cout << "Під'їзд " << e << ", поверх " << f << ", квартира " << a << endl;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
